@@ -9,15 +9,15 @@
 
 Imagine que você pudesse descrever uma tarefa de programação em uma frase — "adicionar validação no cadastro de usuários" — e um time de agentes de IA fizesse tudo sozinho: entendesse a tarefa, planejasse a solução, escrevesse o código com testes, revisasse a qualidade e abrisse um Pull Request pronto para review. Isso é o holon-minions.
 
-Inspirado no sistema interno da Stripe (que gera mais de 1.300 PRs por semana sem humanos escreverem código), o holon-minions usa arquitetura holonômica — onde cada agente é autônomo (toma decisões sozinho) mas integrado (colabora com os outros através de mensagens tipadas e memória compartilhada em grafo).
+O holon-minions usa arquitetura holonômica — onde cada agente é autônomo (toma decisões sozinho) mas integrado (colabora com os outros através de mensagens tipadas e memória compartilhada em grafo).
 
 O resultado? Um prompt vira código testado, revisado e pronto para produção.
 
 ---
 
-Imagine describing a programming task in one sentence — "add validation to user registration" — and a team of AI agents handles everything: understands the task, plans the solution, writes tested code, reviews quality, and opens a Pull Request ready for review. That's holon-minions.
+Imagine describing a programming task in one sentence — "add validation to user registration" — and a team of autonomous coding agents handles everything: understands the task, plans the solution, writes tested code, reviews quality, and opens a Pull Request ready for review. That's holon-minions.
 
-Inspired by Stripe's internal system (which ships 1,300+ PRs per week with zero human-written code), holon-minions uses holonomic architecture — where each agent is autonomous (makes its own decisions) yet integrated (collaborates through typed messages and a shared graph memory).
+It uses holonomic architecture — where each agent is autonomous (makes its own decisions) yet integrated (collaborates through typed messages and a shared graph memory).
 
 The result? One prompt becomes tested, reviewed, production-ready code.
 
