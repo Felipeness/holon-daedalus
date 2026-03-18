@@ -41,6 +41,10 @@ export const RelationType = {
   SIMILAR_TO: 'SIMILAR_TO',
   PARENT_OF: 'PARENT_OF',
   CHILD_OF: 'CHILD_OF',
+  MODIFIES: 'MODIFIES',
+  TESTED_BY: 'TESTED_BY',
+  USED_PATTERN: 'USED_PATTERN',
+  CREATED_BY: 'CREATED_BY',
 } as const
 export type RelationType = (typeof RelationType)[keyof typeof RelationType]
 
@@ -54,6 +58,7 @@ export const EntityType = {
   HOLON: 'HOLON',
   DECISION: 'DECISION',
   KNOWLEDGE: 'KNOWLEDGE',
+  PATTERN: 'PATTERN',
 } as const
 export type EntityType = (typeof EntityType)[keyof typeof EntityType]
 
