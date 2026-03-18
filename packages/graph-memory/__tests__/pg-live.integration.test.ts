@@ -20,6 +20,8 @@ const pgLayer = PgClientLive(PG_URL)
 const run = <A, E>(effect: Effect.Effect<A, E, PgClient>) =>
   Effect.runPromise(Effect.scoped(Effect.provide(effect, pgLayer)))
 
+const uuid = () => crypto.randomUUID()
+
 describe.skipIf(!process.env.PG_INTEGRATION)("Postgres live integration", () => {
   beforeAll(async () => {
     await run(
@@ -48,8 +50,9 @@ describe.skipIf(!process.env.PG_INTEGRATION)("Postgres live integration", () => 
   it("EntityStore: upsert and retrieve", async () => {
     const entityLayer = PgEntityStoreLive.pipe(Layer.provide(pgLayer))
 
+    const entityId = uuid()
     const entity: Entity = {
-      id: "ent-test-1" as string,
+      id: entityId as string,
       type: "TASK",
       name: "Test Entity",
       properties: { priority: "high" },
@@ -75,8 +78,12 @@ describe.skipIf(!process.env.PG_INTEGRATION)("Postgres live integration", () => 
     const entityLayer = PgEntityStoreLive.pipe(Layer.provide(pgLayer))
     const relationLayer = PgRelationStoreLive.pipe(Layer.provide(pgLayer))
 
+    const id1 = uuid()
+    const id2 = uuid()
+    const relId = uuid()
+
     const entity1: Entity = {
-      id: "ent-rel-1" as string,
+      id: id1 as string,
       type: "FILE",
       name: "File A",
       properties: {},
@@ -85,7 +92,7 @@ describe.skipIf(!process.env.PG_INTEGRATION)("Postgres live integration", () => 
     }
 
     const entity2: Entity = {
-      id: "ent-rel-2" as string,
+      id: id2 as string,
       type: "FILE",
       name: "File B",
       properties: {},
@@ -94,7 +101,7 @@ describe.skipIf(!process.env.PG_INTEGRATION)("Postgres live integration", () => 
     }
 
     const relation: Relation = {
-      id: "rel-test-1" as string,
+      id: relId as string,
       fromId: entity1.id,
       toId: entity2.id,
       type: "DEPENDS_ON",
@@ -129,13 +136,15 @@ describe.skipIf(!process.env.PG_INTEGRATION)("Postgres live integration", () => 
   it("EventStore: append and retrieve", async () => {
     const eventLayer = PgEventStoreLive.pipe(Layer.provide(pgLayer))
 
+    const aggregateId = uuid()
+
     await Effect.runPromise(
       Effect.scoped(
         Effect.gen(function* () {
           const store = yield* EventStore
 
           const event = yield* store.appendEvent({
-            aggregateId: "agg-test-1",
+            aggregateId,
             type: "EntityCreated",
             version: 1,
             payload: { name: "test" },
@@ -150,7 +159,7 @@ describe.skipIf(!process.env.PG_INTEGRATION)("Postgres live integration", () => 
           expect(event.id).toBeDefined()
           expect(event.type).toBe("EntityCreated")
 
-          const events = yield* store.getEventsByAggregate("agg-test-1")
+          const events = yield* store.getEventsByAggregate(aggregateId)
           expect(events.length).toBeGreaterThanOrEqual(1)
         }).pipe(Effect.provide(Layer.merge(eventLayer, pgLayer))),
       ),
