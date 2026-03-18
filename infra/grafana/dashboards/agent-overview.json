@@ -431,7 +431,7 @@
   ],
   "refresh": "10s",
   "schemaVersion": 39,
-  "tags": ["holon-minions", "agents"],
+  "tags": ["holon-daedalus", "agents"],
   "templating": {
     "list": [
       {
@@ -454,6 +454,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Agent Overview",
-  "uid": "holon-minions-agent-overview",
+  "uid": "holon-daedalus-agent-overview",
   "version": 1
 }

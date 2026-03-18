@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Effect } from 'effect'
-import { runMinionPipeline } from './pipeline.js'
+import { runDaedalusPipeline } from './pipeline.js'
 
 const VERSION = '0.1.0'
 
@@ -24,18 +24,18 @@ const cross = `${RED}\u2717${RESET}`
 const printBanner = () => {
   console.log(`${CYAN}${BOLD}`)
   console.log(`\u2554${'═'.repeat(54)}\u2557`)
-  console.log(`\u2551  holon-minions v${VERSION}${' '.repeat(54 - 20 - VERSION.length)}\u2551`)
+  console.log(`\u2551  holon-daedalus v${VERSION}${' '.repeat(54 - 21 - VERSION.length)}\u2551`)
   console.log(`\u255A${'═'.repeat(54)}\u255D`)
   console.log(RESET)
 }
 
 const printHelp = () => {
   printBanner()
-  console.log(`${BOLD}Usage:${RESET} holon-minions <task description>`)
+  console.log(`${BOLD}Usage:${RESET} holon-daedalus <task description>`)
   console.log('')
   console.log(`${BOLD}Examples:${RESET}`)
-  console.log(`  ${DIM}holon-minions "add user authentication with OAuth2"${RESET}`)
-  console.log(`  ${DIM}holon-minions "fix null pointer in payment service"${RESET}`)
+  console.log(`  ${DIM}holon-daedalus "add user authentication with OAuth2"${RESET}`)
+  console.log(`  ${DIM}holon-daedalus "fix null pointer in payment service"${RESET}`)
   console.log('')
   console.log(`${BOLD}Options:${RESET}`)
   console.log('  --help, -h     Show this help message')
@@ -65,7 +65,7 @@ const withSpinner = async <T>(label: string, fn: () => Promise<T>): Promise<T> =
   }
 }
 
-const formatResult = async (result: Awaited<ReturnType<typeof Effect.runPromise<ReturnType<typeof runMinionPipeline>>>>) => {
+const formatResult = async (result: Awaited<ReturnType<typeof Effect.runPromise<ReturnType<typeof runDaedalusPipeline>>>>) => {
   // Intake
   console.log(`\n${YELLOW}${BOLD}\uD83D\uDCE5 INTAKE${RESET}`)
   await sleep(100)
@@ -128,7 +128,7 @@ const main = async () => {
 
   const result = await withSpinner('Running pipeline...', async () => {
     await sleep(300)
-    return Effect.runPromise(runMinionPipeline(taskDescription))
+    return Effect.runPromise(runDaedalusPipeline(taskDescription))
   })
 
   await formatResult(result)

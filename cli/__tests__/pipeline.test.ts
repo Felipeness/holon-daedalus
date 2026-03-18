@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { Effect } from 'effect'
-import { runMinionPipeline } from '../src/pipeline.js'
+import { runDaedalusPipeline } from '../src/pipeline.js'
 
-describe('runMinionPipeline', () => {
+describe('runDaedalusPipeline', () => {
   it('classifies a feature task and produces full pipeline result', async () => {
     const result = await Effect.runPromise(
-      runMinionPipeline('add user authentication with OAuth2'),
+      runDaedalusPipeline('add user authentication with OAuth2'),
     )
 
     expect(result.classification.type).toBe('feature')
@@ -25,7 +25,7 @@ describe('runMinionPipeline', () => {
 
   it('classifies a bug fix task', async () => {
     const result = await Effect.runPromise(
-      runMinionPipeline('fix crash in payment service when user is null'),
+      runDaedalusPipeline('fix crash in payment service when user is null'),
     )
 
     expect(result.classification.type).toBe('bug')
@@ -36,7 +36,7 @@ describe('runMinionPipeline', () => {
 
   it('classifies a refactoring task', async () => {
     const result = await Effect.runPromise(
-      runMinionPipeline('refactor the database connection pool'),
+      runDaedalusPipeline('refactor the database connection pool'),
     )
 
     expect(result.classification.type).toBe('refactor')
@@ -46,7 +46,7 @@ describe('runMinionPipeline', () => {
 
   it('handles single-word task descriptions', async () => {
     const result = await Effect.runPromise(
-      runMinionPipeline('deploy'),
+      runDaedalusPipeline('deploy'),
     )
 
     expect(result.subtasks).toHaveLength(1)
@@ -55,7 +55,7 @@ describe('runMinionPipeline', () => {
 
   it('decomposes multi-step tasks', async () => {
     const result = await Effect.runPromise(
-      runMinionPipeline('add input validation then write integration tests'),
+      runDaedalusPipeline('add input validation then write integration tests'),
     )
 
     expect(result.subtasks.length).toBeGreaterThan(1)
@@ -64,7 +64,7 @@ describe('runMinionPipeline', () => {
 
   it('detects security issues in generated content', async () => {
     const result = await Effect.runPromise(
-      runMinionPipeline('create a simple utility function'),
+      runDaedalusPipeline('create a simple utility function'),
     )
 
     expect(result.security.pass).toBe(true)
@@ -73,7 +73,7 @@ describe('runMinionPipeline', () => {
 
   it('produces valid knowledge graph entities and relations', async () => {
     const result = await Effect.runPromise(
-      runMinionPipeline('implement search feature'),
+      runDaedalusPipeline('implement search feature'),
     )
 
     const entityTypes = result.knowledge.entities.map((e) => e.type)

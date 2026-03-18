@@ -1,15 +1,15 @@
-# holon-minions
+# holon-daedalus
 
 Holonomic multi-agent system using Effect-TS, event sourcing, and graph memory.
 
 ## Spec
 
-Full architecture spec: `../holon-minions-spec.md`
+Full architecture spec: `../holon-daedalus-spec.md`
 
 ## Monorepo Structure
 
 ```
-holon-minions/
+holon-daedalus/
 ├── packages/           # Shared libraries
 │   ├── shared/         # Branded types, errors, schemas, constants
 │   ├── graph-memory/   # Event-sourced graph database (entities + relations)

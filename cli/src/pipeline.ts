@@ -49,7 +49,7 @@ export interface PipelineResult {
   readonly outcomes: OutcomeAnalysis
 }
 
-export const runMinionPipeline = (taskDescription: string) =>
+export const runDaedalusPipeline = (taskDescription: string) =>
   Effect.gen(function* () {
     // 1. Intake — classify, gather context, decompose
     const classification = yield* classifyTask(taskDescription)

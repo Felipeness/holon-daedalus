@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "holon-minions": "./src/index.ts"
+    "holon-daedalus": "./src/index.ts"
   },
   "scripts": {
     "build": "tsc -b",

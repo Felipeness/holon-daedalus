@@ -1,4 +1,4 @@
-# holon-minions
+# holon-daedalus
 
 [![Tests](https://img.shields.io/badge/tests-244%20passing-brightgreen)]()
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)]()
@@ -7,15 +7,15 @@
 
 ## O que é isso? / What is this?
 
-Imagine que você pudesse descrever uma tarefa de programação em uma frase — "adicionar validação no cadastro de usuários" — e um time de agentes de IA fizesse tudo sozinho: entendesse a tarefa, planejasse a solução, escrevesse o código com testes, revisasse a qualidade e abrisse um Pull Request pronto para review. Isso é o holon-minions.
+Imagine que você pudesse descrever uma tarefa de programação em uma frase — "adicionar validação no cadastro de usuários" — e um time de agentes de IA fizesse tudo sozinho: entendesse a tarefa, planejasse a solução, escrevesse o código com testes, revisasse a qualidade e abrisse um Pull Request pronto para review. Isso é o holon-daedalus.
 
-O holon-minions usa arquitetura holonômica — onde cada agente é autônomo (toma decisões sozinho) mas integrado (colabora com os outros através de mensagens tipadas e memória compartilhada em grafo).
+O holon-daedalus usa arquitetura holonômica — onde cada agente é autônomo (toma decisões sozinho) mas integrado (colabora com os outros através de mensagens tipadas e memória compartilhada em grafo).
 
 O resultado? Um prompt vira código testado, revisado e pronto para produção.
 
 ---
 
-Imagine describing a programming task in one sentence — "add validation to user registration" — and a team of autonomous coding agents handles everything: understands the task, plans the solution, writes tested code, reviews quality, and opens a Pull Request ready for review. That's holon-minions.
+Imagine describing a programming task in one sentence — "add validation to user registration" — and a team of autonomous coding agents handles everything: understands the task, plans the solution, writes tested code, reviews quality, and opens a Pull Request ready for review. That's holon-daedalus.
 
 It uses holonomic architecture — where each agent is autonomous (makes its own decisions) yet integrated (collaborates through typed messages and a shared graph memory).
 
@@ -25,9 +25,9 @@ The result? One prompt becomes tested, reviewed, production-ready code.
 
 ## O problema que resolve / The problem it solves
 
-Desenvolvedores gastam horas em tarefas repetitivas: criar branches, escrever boilerplate, rodar testes, abrir PRs. Agentes de IA existentes ajudam, mas não completam tarefas do início ao fim sem intervenção humana. O holon-minions resolve isso com execução one-shot: você descreve, ele entrega.
+Desenvolvedores gastam horas em tarefas repetitivas: criar branches, escrever boilerplate, rodar testes, abrir PRs. Agentes de IA existentes ajudam, mas não completam tarefas do início ao fim sem intervenção humana. O holon-daedalus resolve isso com execução one-shot: você descreve, ele entrega.
 
-Developers spend hours on repetitive tasks: creating branches, writing boilerplate, running tests, opening PRs. Existing AI agents help, but can't complete tasks end-to-end without human intervention. holon-minions solves this with one-shot execution: you describe, it delivers.
+Developers spend hours on repetitive tasks: creating branches, writing boilerplate, running tests, opening PRs. Existing AI agents help, but can't complete tasks end-to-end without human intervention. holon-daedalus solves this with one-shot execution: you describe, it delivers.
 
 ---
 
@@ -98,8 +98,8 @@ Developers spend hours on repetitive tasks: creating branches, writing boilerpla
 
 ```bash
 # Clone
-git clone https://github.com/Felipeness/holon-minions.git
-cd holon-minions
+git clone https://github.com/Felipeness/holon-daedalus.git
+cd holon-daedalus
 
 # Install dependencies
 pnpm install
@@ -119,7 +119,7 @@ pnpm test
 ## Estrutura do Projeto / Project Structure
 
 ```
-holon-minions/
+holon-daedalus/
 ├── cli/                          # CLI entry point and pipeline orchestration
 │   ├── src/
 │   │   ├── index.ts              # CLI argument parsing and output formatting

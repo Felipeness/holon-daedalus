@@ -1,4 +1,4 @@
--- holon-minions database schema
+-- holon-daedalus database schema
 -- Event sourcing + graph memory
 
 -- Extension for UUID generation

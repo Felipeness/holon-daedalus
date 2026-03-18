@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: holon_minions
+      POSTGRES_DB: holon_daedalus
       POSTGRES_USER: holon
       POSTGRES_PASSWORD: holon_dev
     ports:
@@ -11,7 +11,7 @@ services:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U holon -d holon_minions"]
+      test: ["CMD-SHELL", "pg_isready -U holon -d holon_daedalus"]
       interval: 5s
       timeout: 5s
       retries: 5
