@@ -35,3 +35,15 @@ export { findSimilar } from './queries/find-similar.js'
 export type { FindSimilarOpts } from './queries/find-similar.js'
 export { queryPattern } from './queries/query-pattern.js'
 export { projectEntities } from './projections/entity-projector.js'
+
+export { PgClient, PgClientLive, PgError } from './pg-client.js'
+export type { PgClientService } from './pg-client.js'
+
+export {
+  PgEventStoreLive,
+  PgEntityStoreLive,
+  PgRelationStoreLive,
+  PgIdempotencyStoreLive,
+} from './live.js'
+
+export { getStorageLayers, DEFAULT_PG_URL } from './detect-storage.js'
