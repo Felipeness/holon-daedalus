@@ -1,1 +1,2 @@
-export const INTAKE_API_VERSION = '0.1.0' as const
+export { processTask } from './cli.js'
+export type { IntakeResult } from './cli.js'
