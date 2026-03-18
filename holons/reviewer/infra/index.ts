@@ -1,1 +1,2 @@
-export const REVIEWER_INFRA_VERSION = '0.1.0' as const
+export { GitHubClientTag, GitHubClientLive, GitHubError } from './github-client.js'
+export type { GitHubClient, PRCreateInput, PRCreateResult } from './github-client.js'
