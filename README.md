@@ -5,13 +5,13 @@
 [![Effect-TS](https://img.shields.io/badge/Effect--TS-v3-purple)]()
 [![License](https://img.shields.io/badge/license-MIT-green)]()
 
-## O que e isso? / What is this?
+## O que é isso? / What is this?
 
-Imagine que voce pudesse descrever uma tarefa de programacao em uma frase — "adicionar validacao no cadastro de usuarios" — e um time de agentes de IA fizesse tudo sozinho: entendesse a tarefa, planejasse a solucao, escrevesse o codigo com testes, revisasse a qualidade e abrisse um Pull Request pronto para review. Isso e o holon-minions.
+Imagine que você pudesse descrever uma tarefa de programação em uma frase — "adicionar validação no cadastro de usuários" — e um time de agentes de IA fizesse tudo sozinho: entendesse a tarefa, planejasse a solução, escrevesse o código com testes, revisasse a qualidade e abrisse um Pull Request pronto para review. Isso é o holon-minions.
 
-Inspirado no sistema interno da Stripe (que gera mais de 1.300 PRs por semana sem humanos escreverem codigo), o holon-minions usa arquitetura holonomica — onde cada agente e autonomo (toma decisoes sozinho) mas integrado (colabora com os outros atraves de mensagens tipadas e memoria compartilhada em grafo).
+Inspirado no sistema interno da Stripe (que gera mais de 1.300 PRs por semana sem humanos escreverem código), o holon-minions usa arquitetura holonômica — onde cada agente é autônomo (toma decisões sozinho) mas integrado (colabora com os outros através de mensagens tipadas e memória compartilhada em grafo).
 
-O resultado? Um prompt vira codigo testado, revisado e pronto para producao.
+O resultado? Um prompt vira código testado, revisado e pronto para produção.
 
 ---
 
@@ -25,7 +25,7 @@ The result? One prompt becomes tested, reviewed, production-ready code.
 
 ## O problema que resolve / The problem it solves
 
-Desenvolvedores gastam horas em tarefas repetitivas: criar branches, escrever boilerplate, rodar testes, abrir PRs. Agentes de IA existentes ajudam, mas nao completam tarefas do inicio ao fim sem intervencao humana. O holon-minions resolve isso com execucao one-shot: voce descreve, ele entrega.
+Desenvolvedores gastam horas em tarefas repetitivas: criar branches, escrever boilerplate, rodar testes, abrir PRs. Agentes de IA existentes ajudam, mas não completam tarefas do início ao fim sem intervenção humana. O holon-minions resolve isso com execução one-shot: você descreve, ele entrega.
 
 Developers spend hours on repetitive tasks: creating branches, writing boilerplate, running tests, opening PRs. Existing AI agents help, but can't complete tasks end-to-end without human intervention. holon-minions solves this with one-shot execution: you describe, it delivers.
 
@@ -59,11 +59,11 @@ Developers spend hours on repetitive tasks: creating branches, writing boilerpla
 
 | Holon | Purpose | Key Functions |
 |-------|---------|---------------|
-| **Intake** | Classifica tarefas, extrai contexto, decompoe em subtarefas / Classifies tasks, extracts context, decomposes into subtasks | `classifyTask`, `assembleContext`, `decompose` |
-| **Planner** | Pontua relevancia de arquivos, cura contexto dentro do budget de tokens, gera blueprints / Scores file relevance, curates context within token budget, builds execution blueprints | `scoreRelevance`, `curateContext`, `buildBlueprint` |
-| **Coder** | Gerencia politicas de ferramentas por tipo de tarefa, executa ciclos TDD red-green-refactor / Manages tool policies per task type, drives TDD red-green-refactor cycles, self-reflects on failures | `getToolPolicy`, `createTddState`, `reflect` |
-| **Reviewer** | Analise estatica, seguranca, composicao de PR / Static analysis (function length, nesting, naming), security scanning, PR composition | `reviewCode`, `scanSecurity`, `composePR` |
-| **Scholar** | Extrai entidades/relacoes para o grafo de conhecimento, analisa padroes de resultado / Extracts knowledge graph entities/relations from executions, analyzes outcome patterns, applies relevance decay | `extractKnowledge`, `analyzeOutcomes`, `applyRelevanceDecay` |
+| **Intake** | Classifica tarefas, extrai contexto, decompõe em subtarefas / Classifies tasks, extracts context, decomposes into subtasks | `classifyTask`, `assembleContext`, `decompose` |
+| **Planner** | Pontua relevância de arquivos, cura contexto dentro do budget de tokens, gera blueprints / Scores file relevance, curates context within token budget, builds execution blueprints | `scoreRelevance`, `curateContext`, `buildBlueprint` |
+| **Coder** | Gerencia políticas de ferramentas por tipo de tarefa, executa ciclos TDD red-green-refactor / Manages tool policies per task type, drives TDD red-green-refactor cycles, self-reflects on failures | `getToolPolicy`, `createTddState`, `reflect` |
+| **Reviewer** | Análise estática, segurança, composição de PR / Static analysis (function length, nesting, naming), security scanning, PR composition | `reviewCode`, `scanSecurity`, `composePR` |
+| **Scholar** | Extrai entidades/relações para o grafo de conhecimento, analisa padrões de resultado / Extracts knowledge graph entities/relations from executions, analyzes outcome patterns, applies relevance decay | `extractKnowledge`, `analyzeOutcomes`, `applyRelevanceDecay` |
 
 ---
 
