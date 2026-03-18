@@ -1,0 +1,23 @@
+{
+  "name": "@holon/shared",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    },
+    "./*": {
+      "import": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "effect": "^3.12.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

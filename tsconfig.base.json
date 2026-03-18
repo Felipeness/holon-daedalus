@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "paths": {
+      "@holon/shared": ["./packages/shared/src/index.ts"],
+      "@holon/shared/*": ["./packages/shared/src/*"],
+      "@holon/graph-memory": ["./packages/graph-memory/src/index.ts"],
+      "@holon/graph-memory/*": ["./packages/graph-memory/src/*"],
+      "@holon/blueprint-engine": ["./packages/blueprint-engine/src/index.ts"],
+      "@holon/blueprint-engine/*": ["./packages/blueprint-engine/src/*"],
+      "@holon/holon-runtime": ["./packages/holon-runtime/src/index.ts"],
+      "@holon/holon-runtime/*": ["./packages/holon-runtime/src/*"],
+      "@holon/circuit-breaker": ["./packages/circuit-breaker/src/index.ts"],
+      "@holon/circuit-breaker/*": ["./packages/circuit-breaker/src/*"],
+      "@holon/observability": ["./packages/observability/src/index.ts"],
+      "@holon/observability/*": ["./packages/observability/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

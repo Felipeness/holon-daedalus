@@ -1,0 +1,1 @@
+export const CODER_API_VERSION = '0.1.0' as const

@@ -1,0 +1,21 @@
+{
+  "name": "@holon/circuit-breaker",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@holon/shared": "workspace:*",
+    "effect": "^3.12.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

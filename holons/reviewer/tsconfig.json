@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": ["domain", "api", "infra"],
+  "references": [
+    { "path": "../../packages/shared" },
+    { "path": "../../packages/graph-memory" },
+    { "path": "../../packages/circuit-breaker" },
+    { "path": "../../packages/holon-runtime" },
+    { "path": "../../packages/observability" }
+  ]
+}
