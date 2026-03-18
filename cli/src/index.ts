@@ -21,23 +21,33 @@ const BG_BLACK = '\x1b[40m'
 const check = `${GREEN}\u2713${RESET}`
 const cross = `${RED}\u2717${RESET}`
 
-const printBanner = () => {
+const printBanner = (mode: 'LIVE' | 'DEMO') => {
+  const modeLabel = mode === 'LIVE' ? `${GREEN}[LIVE MODE]${CYAN}${BOLD}` : `${DIM}[DEMO MODE]${CYAN}${BOLD}`
+  const innerWidth = 54
+  const prefix = `  holon-daedalus v${VERSION}`
+  // Visible characters only for padding calc
+  const modeLabelVisible = mode === 'LIVE' ? '[LIVE MODE]' : '[DEMO MODE]'
+  const padding = innerWidth - prefix.length - modeLabelVisible.length - 2
   console.log(`${CYAN}${BOLD}`)
-  console.log(`\u2554${'═'.repeat(54)}\u2557`)
-  console.log(`\u2551  holon-daedalus v${VERSION}${' '.repeat(54 - 21 - VERSION.length)}\u2551`)
-  console.log(`\u255A${'═'.repeat(54)}\u255D`)
+  console.log(`\u2554${'═'.repeat(innerWidth)}\u2557`)
+  console.log(`\u2551${prefix}${' '.repeat(Math.max(padding, 1))}${modeLabel}  \u2551`)
+  console.log(`\u255A${'═'.repeat(innerWidth)}\u255D`)
   console.log(RESET)
 }
 
 const printHelp = () => {
-  printBanner()
-  console.log(`${BOLD}Usage:${RESET} holon-daedalus <task description>`)
+  printBanner('DEMO')
+  console.log(`${BOLD}Usage:${RESET} holon-daedalus <task description> [--cwd <path>]`)
   console.log('')
   console.log(`${BOLD}Examples:${RESET}`)
+  console.log(`  ${DIM}# Demo mode (no LLM calls)${RESET}`)
   console.log(`  ${DIM}holon-daedalus "add user authentication with OAuth2"${RESET}`)
-  console.log(`  ${DIM}holon-daedalus "fix null pointer in payment service"${RESET}`)
+  console.log('')
+  console.log(`  ${DIM}# Live mode (calls claude -p to write real code)${RESET}`)
+  console.log(`  ${DIM}holon-daedalus "fix null pointer in payment service" --cwd /path/to/repo${RESET}`)
   console.log('')
   console.log(`${BOLD}Options:${RESET}`)
+  console.log('  --cwd <path>   Target repo for live mode (calls claude -p)')
   console.log('  --help, -h     Show this help message')
   console.log('  --version, -v  Show version')
 }
@@ -65,7 +75,7 @@ const withSpinner = async <T>(label: string, fn: () => Promise<T>): Promise<T> =
   }
 }
 
-const formatResult = async (result: Awaited<ReturnType<typeof Effect.runPromise<ReturnType<typeof runDaedalusPipeline>>>>) => {
+const formatResult = async (result: Awaited<ReturnType<typeof Effect.runPromise<ReturnType<typeof runDaedalusPipeline>>>>, targetDir?: string) => {
   // Intake
   console.log(`\n${YELLOW}${BOLD}\uD83D\uDCE5 INTAKE${RESET}`)
   await sleep(100)
@@ -84,10 +94,29 @@ const formatResult = async (result: Awaited<ReturnType<typeof Effect.runPromise<
   console.log(`  Blueprint: ${BOLD}5 nodes${RESET} ${DIM}(lint \u2192 code \u2192 test \u2192 review \u2192 commit)${RESET}`)
 
   // Coder
-  console.log(`\n${MAGENTA}${BOLD}\uD83D\uDD27 CODER${RESET}`)
-  await sleep(100)
-  console.log(`  Tool Policy: ${DIM}${result.toolPolicy.allowedTools.join(', ')}${RESET}`)
-  console.log(`  TDD Phase: ${BOLD}${result.tddPlan.state.phase.toUpperCase()}${RESET} | Action: ${DIM}${result.tddPlan.firstAction.type}${RESET}`)
+  if (result.liveMode) {
+    const exitLabel = result.liveMode.exitCode === 0 ? `${GREEN}0 ${check}${RESET}` : `${RED}${result.liveMode.exitCode} ${cross}${RESET}`
+    console.log(`\n${MAGENTA}${BOLD}\uD83D\uDD27 CODER (LIVE MODE)${RESET}`)
+    await sleep(100)
+    console.log(`  Target: ${BOLD}${targetDir}${RESET}`)
+    console.log(`  Tool Policy: ${DIM}${result.toolPolicy.allowedTools.join(', ')}${RESET}`)
+    console.log(`  Exit code: ${exitLabel}`)
+    console.log('')
+    // Show claude output, indented
+    const outputLines = result.liveMode.claudeOutput.split('\n')
+    const maxLines = 50
+    const displayLines = outputLines.length > maxLines
+      ? [...outputLines.slice(0, maxLines), `  ${DIM}... (${outputLines.length - maxLines} more lines)${RESET}`]
+      : outputLines
+    for (const line of displayLines) {
+      console.log(`  ${DIM}${line}${RESET}`)
+    }
+  } else {
+    console.log(`\n${MAGENTA}${BOLD}\uD83D\uDD27 CODER${RESET}`)
+    await sleep(100)
+    console.log(`  Tool Policy: ${DIM}${result.toolPolicy.allowedTools.join(', ')}${RESET}`)
+    console.log(`  TDD Phase: ${BOLD}${result.tddPlan.state.phase.toUpperCase()}${RESET} | Action: ${DIM}${result.tddPlan.firstAction.type}${RESET}`)
+  }
 
   // Reviewer
   console.log(`\n${GREEN}${BOLD}\uD83D\uDD0D REVIEWER${RESET}`)
@@ -109,6 +138,15 @@ const formatResult = async (result: Awaited<ReturnType<typeof Effect.runPromise<
 
 const main = async () => {
   const args = process.argv.slice(2)
+
+  // Parse --cwd flag
+  const cwdIndex = args.indexOf('--cwd')
+  let targetDir: string | undefined
+  if (cwdIndex !== -1 && args[cwdIndex + 1]) {
+    targetDir = args[cwdIndex + 1]
+    args.splice(cwdIndex, 2)
+  }
+
   const first = args[0]
 
   if (!first || first === '--help' || first === '-h') {
@@ -122,16 +160,24 @@ const main = async () => {
   }
 
   const taskDescription = args.join(' ')
+  const mode = targetDir ? 'LIVE' : 'DEMO' as const
 
-  printBanner()
+  printBanner(mode)
   console.log(`  ${DIM}Task:${RESET} ${BOLD}"${taskDescription}"${RESET}`)
+  if (targetDir) {
+    console.log(`  ${DIM}Target:${RESET} ${BOLD}${targetDir}${RESET}`)
+  }
 
-  const result = await withSpinner('Running pipeline...', async () => {
-    await sleep(300)
-    return Effect.runPromise(runDaedalusPipeline(taskDescription))
+  const spinnerLabel = targetDir
+    ? 'Running pipeline (live mode - this may take a few minutes)...'
+    : 'Running pipeline...'
+
+  const result = await withSpinner(spinnerLabel, async () => {
+    if (!targetDir) await sleep(300)
+    return Effect.runPromise(runDaedalusPipeline(taskDescription, targetDir))
   })
 
-  await formatResult(result)
+  await formatResult(result, targetDir)
 }
 
 main().catch((error: unknown) => {

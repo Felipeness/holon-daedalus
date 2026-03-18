@@ -7,6 +7,7 @@ export type ClaudeExecutionConfig = {
   readonly maxTurns?: number
   readonly outputFormat?: "text" | "json"
   readonly timeout?: number
+  readonly cwd?: string
 }
 
 export type ClaudeResult = {
@@ -39,6 +40,7 @@ export const executeClaudeHeadless = (config: ClaudeExecutionConfig): Effect.Eff
         encoding: "utf-8",
         timeout: config.timeout ?? 120_000,
         maxBuffer: 10 * 1024 * 1024,
+        ...(config.cwd ? { cwd: config.cwd } : {}),
       })
 
       return { output: output.trim(), exitCode: 0 } as ClaudeResult
