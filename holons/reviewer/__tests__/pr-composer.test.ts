@@ -46,11 +46,17 @@ describe('composePR', () => {
   })
 
   it('generates body with Jira link when ticket provided', () => {
-    const result = composePR(makeInput({ jiraTicket: 'CC-1234' }))
+    const result = composePR(makeInput({ jiraTicket: 'CC-1234', jiraBaseUrl: 'https://example.atlassian.net' }))
 
     expect(result.body).toContain('## Jira')
-    expect(result.body).toContain('https://superlogica.atlassian.net/browse/CC-1234')
+    expect(result.body).toContain('https://example.atlassian.net/browse/CC-1234')
     expect(result.body).toContain('[CC-1234]')
+  })
+
+  it('generates body with plain ticket when Jira base url missing', () => {
+    const result = composePR(makeInput({ jiraTicket: 'CC-1234' }))
+
+    expect(result.body).not.toContain('](')
   })
 
   it('generates body with N/A when no Jira ticket', () => {
