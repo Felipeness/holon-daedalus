@@ -3,6 +3,7 @@ export interface PRInput {
   readonly changesSummary: string
   readonly testResults: string
   readonly jiraTicket?: string
+  readonly jiraBaseUrl?: string
   readonly taskType: 'feat' | 'fix' | 'chore' | 'refactor' | 'docs' | 'test' | 'perf'
   readonly scope?: string
 }
@@ -23,9 +24,11 @@ const buildTitle = (input: PRInput): string => {
 }
 
 const buildBody = (input: PRInput): string => {
-  const jiraLink = input.jiraTicket
-    ? `https://superlogica.atlassian.net/browse/${input.jiraTicket}`
-    : 'N/A'
+  const jiraLine = !input.jiraTicket
+    ? 'N/A (no ticket)'
+    : input.jiraBaseUrl
+      ? `[${input.jiraTicket}](${input.jiraBaseUrl}/browse/${input.jiraTicket})`
+      : input.jiraTicket
 
   return [
     '## Summary',
@@ -42,7 +45,7 @@ const buildBody = (input: PRInput): string => {
     '',
     '## Jira',
     '',
-    input.jiraTicket ? `[${input.jiraTicket}](${jiraLink})` : 'N/A (no ticket)',
+    jiraLine,
   ].join('\n')
 }
 

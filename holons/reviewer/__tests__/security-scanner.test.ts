@@ -39,7 +39,7 @@ describe('scanSecurity', () => {
   })
 
   it('detects hardcoded API keys', () => {
-    const content = 'const apiKey = "sk_live_1234567890abcdef1234"'
+    const content = 'const apiKey = "sk_test_1234567890abcdef1234"'
 
     const result = scanSecurity(content, 'config.ts')
 
@@ -85,7 +85,7 @@ describe('scanSecurity', () => {
 
   it('reports multiple findings in the same file', () => {
     const content = [
-      'const apiKey = "sk_live_abcdef1234567890abcd"',
+      'const apiKey = "sk_test_abcdef1234567890abcd"',
       'const x = eval(input)',
       'el.innerHTML = data',
     ].join('\n')
